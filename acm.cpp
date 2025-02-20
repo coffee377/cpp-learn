@@ -1,55 +1,28 @@
-//
-// Created by WuYujie on 2025/2/16.
-//
-
 #include "acm.hpp"
 #include <iostream>
 #include <vector>
 #include <format>
+
 using namespace std;
 
 // 天干数组
-const std::string heavenlyStems[10] = {"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"};
+const std::string heavenlyStems[10] = {
+    "甲", "乙", "丙", "丁", "戊",
+    "己", "庚", "辛", "壬", "癸"
+};
 // 地支数组
-const std::string earthlyBranches[12] = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"};
+const std::string earthlyBranches[12] = {
+    "子", "丑", "寅", "卯",
+    "辰", "巳", "午", "未",
+    "申", "酉", "戌", "亥"
+};
 // 生肖数组
-const std::string chineseZodiacs[12] = {"鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"};
-
-
-class HeavenlyStem {
-    // 存储天干的索引，范围 0 - 9
-    unsigned int index;
-    // 天干数组，存储十个天干
-    const std::string heavenlyStems[10] = {"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"};
-
-public:
-    // 构造函数，根据索引初始化天干
-    explicit HeavenlyStem(const int pos) {
-        if (pos == 0) {
-            throw std::invalid_argument("天干位置必须是不为 0 的数，负数表示从后往前的位置");
-        }
-        if (pos > 0) {
-            index = (pos - 1) % 10;
-        } else if (pos < 0) {
-            index = pos % 10 + 10;
-        } else {
-            index = pos;
-        }
-    }
-
-    // 获取天干的名称
-    [[nodiscard]] std::string getName() const {
-        return heavenlyStems[index];
-    }
-
-    // 重载前置递增运算符
-    HeavenlyStem &operator++() {
-        index = (index + 1) % 10;
-        return *this;
-    }
+const std::string chineseZodiacs[12] = {
+    "鼠", "牛", "虎", "兔",
+    "龙", "蛇", "马", "羊",
+    "猴", "鸡", "狗", "猪"
 };
 
-// 生成天干地支的所有排列组合
 vector<string> generateStemBranchCombinations() {
     vector<string> combinations;
     int stemIndex = 0, branchIndex = 0;
@@ -80,6 +53,7 @@ void listStemBranchCombinations(const bool rowStem) {
         branchIndex = (branchIndex + 1) % 12;
     }
 
+    std::cout << std::format("六十干支周名称顺序表（天干{}式排列）：\n", rowStem ? "行" : "列") << std::endl;
     if (rowStem) {
         for (int i = 0; i < 6; ++i) {
             for (int j = 0; j < 10; ++j) {
@@ -157,4 +131,13 @@ std::string getYearStemBranch(const unsigned int year, const bool showZodiacAnim
         result += format("({})", chineseZodiacs[branchIndex]);
     }
     return result;
+}
+
+void printExampleData(const std::vector<ExampleData> &data) {
+    std::cout << "干支纪年法历史示例：\n" << std::endl;
+    for (const auto &[year, beforeChrist, remark]: data) {
+        auto s1 = format("公元{0:<3}\t{1:>4}年", beforeChrist ? "前" : "", year);
+        auto s2 = getYearStemBranch(year, true, beforeChrist) + "年";
+        std::cout << std::format("{} | {:^6} | {:8}", s1, s2, remark) << std::endl;
+    }
 }
