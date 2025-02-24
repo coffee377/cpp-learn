@@ -37,3 +37,5 @@ cmake-build-debug
 cmake-build-release
 tmp
 *.tar.gz
+*.zip
+acm
