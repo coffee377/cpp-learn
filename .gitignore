@@ -39,3 +39,4 @@ tmp
 *.tar.gz
 *.zip
 acm
+dist
