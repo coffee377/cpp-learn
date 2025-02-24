@@ -21,7 +21,7 @@ elseif(UNIX)
     # 例如：设置 Linux 特定的编译选项或链接库
 endif()
 
-add_executable(acm main.cpp acm.cpp)
+add_executable(acm src/main.cpp src/acm.cpp)
 
 include(FetchContent)
 
