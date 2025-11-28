@@ -3,7 +3,6 @@
 #include <vector>
 #include <format>
 
-using namespace std;
 
 // 天干数组
 const std::string heavenlyStems[10] = {
@@ -23,12 +22,12 @@ const std::string chineseZodiacs[12] = {
     "猴", "鸡", "狗", "猪"
 };
 
-vector<string> generateStemBranchCombinations() {
-    vector<string> combinations;
+std::vector<std::string> generateStemBranchCombinations() {
+    std::vector<std::string>  combinations;
     int stemIndex = 0, branchIndex = 0;
     for (int i = 0; i < 60; ++i) {
         // 组合天干地支
-        string combination = format("{0}{1}", heavenlyStems[stemIndex], earthlyBranches[branchIndex]);
+        std::string combination = format("{0}{1}", heavenlyStems[stemIndex], earthlyBranches[branchIndex]);
         combinations.push_back(combination);
         // 更新天干和地支的索引
         stemIndex = (stemIndex + 1) % 10;
@@ -39,11 +38,11 @@ vector<string> generateStemBranchCombinations() {
 
 void listStemBranchCombinations(const bool rowStem) {
     int stemIndex = 0, branchIndex = 0;
-    string sixtyCycle[6][10] = {};
+    std::string sixtyCycle[6][10] = {};
 
     for (int i = 0; i < 60; ++i) {
         // 组合天干地支
-        string combination = format("{0}{1}", heavenlyStems[stemIndex], earthlyBranches[branchIndex]);
+        std::string combination = format("{0}{1}", heavenlyStems[stemIndex], earthlyBranches[branchIndex]);
 
         const int row = (i + 1) / 10, col = (i + 1) % 10 - 1;
         sixtyCycle[row][col] = format("{:02} {}", i + 1, combination);
@@ -57,19 +56,19 @@ void listStemBranchCombinations(const bool rowStem) {
     if (rowStem) {
         for (int i = 0; i < 6; ++i) {
             for (int j = 0; j < 10; ++j) {
-                cout << format("{0}{1}", sixtyCycle[i][j], j == 9 ? "" : "\t");
+                std::cout << std::format("{0}{1}", sixtyCycle[i][j], j == 9 ? "" : "\t");
             }
             if (i < 5) {
-                cout << endl;
+                 std::cout <<  std::endl;
             }
         }
     } else {
         for (int i = 0; i < 10; ++i) {
             for (int j = 0; j < 6; ++j) {
-                cout << format("{0}{1}", sixtyCycle[j][i], j == 5 ? "" : "\t");
+                std::cout << format("{0}{1}", sixtyCycle[j][i], j == 5 ? "" : "\t");
             }
             if (i < 9) {
-                cout << endl;
+                std::cout << std::endl;
             }
         }
     }
@@ -126,7 +125,7 @@ std::string getYearStemBranch(const unsigned int year, const bool showZodiacAnim
     // }
     branchIndex = (branch + 8) % 12;
 
-    string result = format("{}{}", heavenlyStems[stemIndex], earthlyBranches[branchIndex]);
+    std::string result = format("{}{}", heavenlyStems[stemIndex], earthlyBranches[branchIndex]);
     if (showZodiacAnimal) {
         result += format("({})", chineseZodiacs[branchIndex]);
     }
@@ -136,7 +135,7 @@ std::string getYearStemBranch(const unsigned int year, const bool showZodiacAnim
 void printExampleData(const std::vector<ExampleData> &data) {
     std::cout << "干支纪年法历史示例：\n" << std::endl;
     for (const auto &[year, beforeChrist, remark]: data) {
-        auto s1 = format("公元{0:<3}\t{1:>4}年", beforeChrist ? "前" : "", year);
+        auto s1 = std::format("公元{0:<3}\t{1:>4}年", beforeChrist ? "前" : "", year);
         auto s2 = getYearStemBranch(year, true, beforeChrist) + "年";
         std::cout << std::format("{} | {:^6} | {:8}", s1, s2, remark) << std::endl;
     }
